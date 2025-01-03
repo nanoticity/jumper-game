@@ -58,9 +58,6 @@ class Levels():
             rects = []
             return rects
         elif level_num == 11:
-            rects = []
-            return rects
-        elif level_num == 12:
             rects = [Rect(600, 0), Rect(800, 1), Rect(1000, 0), Rect(1200, 1), Rect(1400, 0), Rect(1600, 1), Rect(1800, 0)]
             return rects
             

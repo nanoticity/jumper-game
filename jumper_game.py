@@ -28,7 +28,6 @@ is_jump = False
 jump_count = 10
 set = False
 old_found = False
-dh = False
 
 level = 1
 rects = []
@@ -46,16 +45,12 @@ while run:
                 run = False
             elif not is_jump and e.key == pygame.K_SPACE:
                 is_jump = True
-            elif e.key == pygame.K_d:
-                dh = not dh
             elif e.key == pygame.K_r:
                 level = 1
                 offset += time
             elif e.key == pygame.K_e:
                 help = not help
     prect.x += vel
-    if dh:
-        prect.y = 0
     if is_jump:
         if not old_found:
             old_jump_count = jump_count
@@ -123,17 +118,17 @@ while run:
             set = True
         rects = levels.Levels.get_level(level)
         level_text("Now jump?")
-    elif level == 11:
+    elif level == 10:
         rects = levels.Levels.get_level(level)
         level_text("Now that was interesting.")
-    elif level == 12:
-        rects = levels.Levels.get_level(level)
+    elif level == 11:
         if not set:
-            jump_count = 8
+            jump_count = 10
             set = True
+        rects = levels.Levels.get_level(level)
         level_text("Now it's getting serious.")
         
-    elif level == 13:
+    elif level == 12:
         level = 1
         offset += time
         
