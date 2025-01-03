@@ -134,8 +134,6 @@ while run:
         level_text("Now it's getting serious.")
         
     elif level == 13:
-        with open("times.txt", "a") as times:
-            times.write(str(pygame.time.get_ticks() / 1000) + "\n")
         level = 1
         offset += time
         
