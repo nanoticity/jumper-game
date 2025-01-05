@@ -48,9 +48,11 @@
           await pyodide.loadPackage(["pygame-ce"], { checkIntegrity: false })
           canvas = document.getElementById("canvas");
           pyodide.canvas.setCanvas2D(canvas);
-          let zipResponse = await fetch("http://127.0.0.1:3000/jumper_game.tar.gz");
+          let href = window.location.href;
+          var link = href.substring(0, href.lastIndexOf('/')) + "/jumper_game.tar";
+          let zipResponse = await fetch(link);
           let zipBinary = await zipResponse.arrayBuffer();
-          pyodide.unpackArchive(zipBinary, ".tar.gz", { extractDir: "/lib/python3.12/site-packages/jumper_game" });
+          pyodide.unpackArchive(zipBinary, "tar", { extractDir: "/lib/python3.12/site-packages/jumper_game" });
           pyodide.runPythonAsync(`
 import sys
 sys.path.append('/lib/python3.12/site-packages/jumper_game')
