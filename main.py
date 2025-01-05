@@ -7,7 +7,7 @@ import asyncio
 pygame.init()
 pygame.mixer.init()
 
-song = pygame.mixer.music.load("jumper-game.mp3")
+song = pygame.mixer.music.load("/lib/python3.12/site-packages/jumper_game/jumper-game.wav")
 pygame.mixer.music.set_volume(0.2)
 pygame.mixer.music.play(loops=-1)
 
@@ -142,7 +142,6 @@ async def main():
             level_text("bye bye")
             rects = levels.Levels.get_level(level)
         elif level == 14:
-            pygame.time.wait(1000)
             level = 1
             offset += time
             
@@ -150,7 +149,6 @@ async def main():
             rect.draw()
             if rect.is_collided_with_p(prect):
                 prect.x = 0
-                pygame.time.wait(500)
         
         text("Level " + str(level), (50, 50), 50, scheme.WHITE)
         text("Time: " + str(time), (50, 100), 50, scheme.WHITE)
