@@ -1,9 +1,15 @@
 import pygame
+import pygame.mixer
 import levels
 import scheme
 import asyncio
 
 pygame.init()
+pygame.mixer.init()
+
+song = pygame.mixer.music.load("jumper-game.mp3")
+pygame.mixer.music.set_volume(0.2)
+pygame.mixer.music.play(loops=-1)
 
 def text(text, pos, size, color):
     font = pygame.font.Font(None, size)
