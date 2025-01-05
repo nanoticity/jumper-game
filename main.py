@@ -48,6 +48,9 @@ async def main():
                     offset += time
                 elif e.key == pygame.K_e:
                     help = not help
+            elif e.type == pygame.MOUSEBUTTONDOWN:
+                if e.button == 1:
+                    is_jump = True
         prect.x += vel
         if is_jump:
             if not old_found:
