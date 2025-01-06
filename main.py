@@ -23,7 +23,6 @@ def text(text, pos, size, color):
 def level_text(t):
     text(t, (40 , 400), 40, (scheme.WHITE))
 
-
 async def main():
     scheme.screen = pygame.display.set_mode(scheme.SIZE) 
     pygame.display.set_caption("Space: Jump!")
@@ -33,6 +32,7 @@ async def main():
 
     is_jump = False
     jump_count = 7
+    frames = 0
     set = False
     old_found = False
     paused = False
@@ -155,15 +155,17 @@ async def main():
                     penalty_start = pygame.time.get_ticks()
                 paused = True
         
+        fps = frames / (pygame.time.get_ticks() / 1000)
         text("Level " + str(level), (50, 50), 50, scheme.WHITE)
         text("Time: " + str(time), (50, 100), 50, scheme.WHITE)
-        text("FPS: " + str(int(clock.get_fps())), (650, 50), 30, scheme.WHITE)
+        text("FPS: " + "{:.2f}".format(fps), (650, 50), 30, scheme.WHITE)
         pygame.draw.rect(scheme.screen, (134, 132, 156), prect)
         pygame.display.update()
         if not help:
             await asyncio.sleep(0.02)
         elif help:
             await asyncio.sleep(0.1)
+        frames += 1
 
     
 
