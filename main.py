@@ -6,14 +6,14 @@ import asyncio
 
 pygame.init()
 pygame.mixer.init(22050, -16, 2, 2048)
-"""
+
 if __name__ == "__main__":
     song = pygame.mixer.music.load("jumper-game.mp3")
 else:
     song = pygame.mixer.music.load("/lib/python3.12/site-packages/jumper_game/jumper-game.wav")
 pygame.mixer.music.set_volume(0.2)
 pygame.mixer.music.play(loops=-1)
-"""
+
 def text(text, pos, size, color):
     font = pygame.font.Font(None, size)
     text = font.render(text, True, color)
@@ -35,6 +35,8 @@ async def main():
     jump_count = 7
     set = False
     old_found = False
+    paused = False
+    penalty_start = 0
 
     level = 1
     rects = []
@@ -60,8 +62,15 @@ async def main():
             elif e.type == pygame.MOUSEBUTTONDOWN:
                 if e.button == 1:
                     is_jump = True
-        prect.x += vel
-        if is_jump:
+       
+        if paused:
+            if penalty_start + 500 < pygame.time.get_ticks():
+                paused = False
+                prect.x = 0
+        else:
+            prect.x += vel
+
+        if is_jump and not paused:
             if not old_found:
                 old_jump_count = jump_count
                 old_found = True
@@ -142,8 +151,9 @@ async def main():
         for rect in rects:
             rect.draw()
             if rect.is_collided_with_p(prect):
-                prect.x = 0
-                pygame.time.wait(500)
+                if not paused:
+                    penalty_start = pygame.time.get_ticks()
+                paused = True
         
         text("Level " + str(level), (50, 50), 50, scheme.WHITE)
         text("Time: " + str(time), (50, 100), 50, scheme.WHITE)
@@ -151,11 +161,11 @@ async def main():
         pygame.draw.rect(scheme.screen, (134, 132, 156), prect)
         pygame.display.update()
         if not help:
-            clock.tick(50)
+            await asyncio.sleep(0.02)
         elif help:
-            clock.tick(8)
-        await asyncio.sleep(0)
-        
+            await asyncio.sleep(0.1)
+
+    
 
 if __name__ == "__main__":
     asyncio.run(main())
