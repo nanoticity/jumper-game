@@ -53,6 +53,8 @@ class Levels():
         elif level_num == 12:
             rects = [Rect(320, 1)]
         elif level_num == 13:
+            rects = [Rect(320, 0), Rect(348, 0)]
+        elif level_num == 14:
             rects = []
         return rects
      

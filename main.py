@@ -5,12 +5,15 @@ import scheme
 import asyncio
 
 pygame.init()
-pygame.mixer.init()
-
-song = pygame.mixer.music.load("/lib/python3.12/site-packages/jumper_game/jumper-game.wav")
+pygame.mixer.init(22050, -16, 2, 2048)
+"""
+if __name__ == "__main__":
+    song = pygame.mixer.music.load("jumper-game.mp3")
+else:
+    song = pygame.mixer.music.load("/lib/python3.12/site-packages/jumper_game/jumper-game.wav")
 pygame.mixer.music.set_volume(0.2)
 pygame.mixer.music.play(loops=-1)
-
+"""
 def text(text, pos, size, color):
     font = pygame.font.Font(None, size)
     text = font.render(text, True, color)
@@ -83,19 +86,7 @@ async def main():
             set = False
         time = round((pygame.time.get_ticks() / 1000) - offset, 3)
         scheme.screen.fill(scheme.DARK_BLUE)
-        """
-        9 
-        if not set:
-                jump_count = 13
-                set = True
-                
-                
-        12
-        if not set:
-                jump_count = 10
-                set = True
         
-        """
         if level == 1:
             level_text("Easy right?")
             rects = levels.Levels.get_level(level)
@@ -139,9 +130,12 @@ async def main():
             level_text("haha")
             rects = levels.Levels.get_level(level)
         elif level == 13:
-            level_text("bye bye")
+            level_text("btw u have 0 pixels to spare")
             rects = levels.Levels.get_level(level)
         elif level == 14:
+            level_text("bye bye")
+            rects = levels.Levels.get_level(level)
+        elif level == 15:
             level = 1
             offset += time
             
@@ -149,12 +143,13 @@ async def main():
             rect.draw()
             if rect.is_collided_with_p(prect):
                 prect.x = 0
+                pygame.time.wait(500)
         
         text("Level " + str(level), (50, 50), 50, scheme.WHITE)
         text("Time: " + str(time), (50, 100), 50, scheme.WHITE)
+        text("FPS: " + str(int(clock.get_fps())), (650, 50), 30, scheme.WHITE)
         pygame.draw.rect(scheme.screen, (134, 132, 156), prect)
         pygame.display.update()
-        pygame.display.flip()
         if not help:
             clock.tick(50)
         elif help:
